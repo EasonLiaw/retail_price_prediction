@@ -1,0 +1,37 @@
+2022-06-24/13:33:23		Start initial data preparation
+2022-06-24/13:33:23		Start loading train schema
+2022-06-24/13:33:23		Finish loading train schema
+2022-06-24/13:33:23		Start copying data from CSV file
+2022-06-24/13:33:23		Finish copying data from CSV file
+2022-06-24/13:33:23		Start handling single quotes on characters
+2022-06-24/13:33:25		Finish handling single quotes on characters
+2022-06-24/13:33:25		Start replacing missing values with null keyword
+2022-06-24/13:33:26		Finish replacing missing values with null keyword
+2022-06-24/13:33:26		Start creating new table(retailprice_training) in SQL database (retail_price)
+2022-06-24/13:33:26		retailprice_training table created with column UID
+2022-06-24/13:33:26		Column NAME added into retailprice_training table
+2022-06-24/13:33:26		Column ZONE added into retailprice_training table
+2022-06-24/13:33:26		Column Brand added into retailprice_training table
+2022-06-24/13:33:26		Column MC added into retailprice_training table
+2022-06-24/13:33:26		Column Fdate added into retailprice_training table
+2022-06-24/13:33:26		Column NSU added into retailprice_training table
+2022-06-24/13:33:26		Column NSV added into retailprice_training table
+2022-06-24/13:33:26		Column GST Value added into retailprice_training table
+2022-06-24/13:33:26		Column NSV-GST added into retailprice_training table
+2022-06-24/13:33:26		Column Sales at Cost added into retailprice_training table
+2022-06-24/13:33:26		Column (NSV-GST)-SALES AT COST added into retailprice_training table
+2022-06-24/13:33:26		Column MARGIN% added into retailprice_training table
+2022-06-24/13:33:26		Column Gross Sales added into retailprice_training table
+2022-06-24/13:33:26		Column Gross RGM(P-L) added into retailprice_training table
+2022-06-24/13:33:26		Column Gross Margin %(Q/P*100) added into retailprice_training table
+2022-06-24/13:33:26		Column MRP added into retailprice_training table
+2022-06-24/13:33:26		Column SP added into retailprice_training table
+2022-06-24/13:33:26		Column DIS added into retailprice_training table
+2022-06-24/13:33:26		Column DIS% added into retailprice_training table
+2022-06-24/13:33:26		Finish creating new table(retailprice_training) in SQL database (retail_price)
+2022-06-24/13:33:26		Start inserting new good training data into SQL database
+2022-06-24/13:33:49		Price.csv file added into database
+2022-06-24/13:33:49		Finish inserting new good training data into SQL database
+2022-06-24/13:33:49		Start writing compiled good training data into a new CSV file
+2022-06-24/13:33:50		Finish writing compiled good training data into a new CSV file
+2022-06-24/13:33:50		Finish initial data preparation

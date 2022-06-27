@@ -1,0 +1,21 @@
+2022-06-27/11:38:31		Start creating new table(prediction_price) in SQL database (retail_price)
+2022-06-27/11:38:31		prediction_price table created with column InputTime
+2022-06-27/11:38:31		Column ZONE added into prediction_price table
+2022-06-27/11:38:31		Column Brand added into prediction_price table
+2022-06-27/11:38:31		Column MC added into prediction_price table
+2022-06-27/11:38:31		Column Fdate added into prediction_price table
+2022-06-27/11:38:31		Column NSU added into prediction_price table
+2022-06-27/11:38:31		Column NSV added into prediction_price table
+2022-06-27/11:38:31		Column GST_Value added into prediction_price table
+2022-06-27/11:38:31		Column Net_NSV added into prediction_price table
+2022-06-27/11:38:31		Column Gross_Sales added into prediction_price table
+2022-06-27/11:38:31		Column MRP added into prediction_price table
+2022-06-27/11:38:31		Column SP added into prediction_price table
+2022-06-27/11:38:31		Column DIS added into prediction_price table
+2022-06-27/11:38:31		Column DIS_percent added into prediction_price table
+2022-06-27/11:38:31		Column Predicted_Cost_per_Unit added into prediction_price table
+2022-06-27/11:38:31		Column Actual_Cost_per_Unit added into prediction_price table
+2022-06-27/11:38:31		Finish creating new table(prediction_price) in SQL database (retail_price)
+2022-06-27/11:38:55		Record with predicted cost of goods sold of 56.37 is inserted into SQL database
+2022-06-27/11:40:05		Record with predicted cost of goods sold of 38.04 is inserted into SQL database
+2022-06-27/11:41:14		Record with predicted cost of goods sold of 39.62 is inserted into SQL database

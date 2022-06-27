@@ -1,0 +1,22 @@
+{	
+	"SampleFileName": "price.xlsx",
+	"NumberofColumns" : 15,
+	"ColName": {
+		"InputTime": "timestamp",
+		"ZONE": "varchar(5)",
+		"Brand": "varchar(1000)",
+		"MC": "varchar(100)",
+		"Fdate": "date",
+		"NSU": "float",
+		"NSV": "float",
+		"GST_Value": "float",
+		"Net_NSV": "float",
+		"Gross_Sales": "float",
+		"MRP": "float",
+		"SP": "float",
+		"DIS": "float",
+		"DIS_percent": "float",
+		"Predicted_Cost_per_Unit": "float",
+		"Actual_Cost_per_Unit": "float"
+	}
+}

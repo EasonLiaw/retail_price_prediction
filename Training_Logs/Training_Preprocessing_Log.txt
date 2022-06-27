@@ -1,0 +1,43 @@
+2022-06-24/13:33:50		Start of data preprocessing
+2022-06-24/13:33:50		Start reading compiled data from database
+2022-06-24/13:33:50		Finish reading compiled data from database
+2022-06-24/13:33:50		Start removing irrelevant columns from the dataset
+2022-06-24/13:33:50		Finish removing irrelevant columns from the dataset
+2022-06-24/13:33:50		Start handling duplicated rows in the dataset
+2022-06-24/13:33:50		Finish handling duplicated rows in the dataset
+2022-06-24/13:33:50		Start separating the data into features and labels
+2022-06-24/13:33:50		Finish separating the data into features and labels
+2022-06-24/13:33:50		Start categorizing columns into gaussian vs non-gaussian distribution
+2022-06-24/13:33:50		NSU column is identified as non-gaussian
+2022-06-24/13:33:51		NSV column is identified as non-gaussian
+2022-06-24/13:33:51		GST Value column is identified as non-gaussian
+2022-06-24/13:33:51		NSV-GST column is identified as non-gaussian
+2022-06-24/13:33:51		Gross Sales column is identified as non-gaussian
+2022-06-24/13:33:51		MRP column is identified as non-gaussian
+2022-06-24/13:33:51		SP column is identified as non-gaussian
+2022-06-24/13:33:51		DIS column is identified as non-gaussian
+2022-06-24/13:33:51		DIS% column is identified as non-gaussian
+2022-06-24/13:33:51		Finish categorizing columns into gaussian vs non-gaussian distribution
+2022-06-24/13:33:51		Start checking outliers for the following columns: ['NSU', 'NSV', 'GST Value', 'NSV-GST', 'Gross Sales', 'MRP', 'SP', 'DIS', 'DIS%']
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for NSU column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for NSU column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for NSV column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for NSV column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for GST Value column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for GST Value column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for NSV-GST column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for NSV-GST column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for Gross Sales column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for Gross Sales column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for MRP column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for MRP column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for SP column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for SP column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for DIS column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for DIS column
+2022-06-24/13:33:51		Start computing lower and upper bound of outliers for DIS% column
+2022-06-24/13:33:51		Finish computing lower and upper bound of outliers for DIS% column
+2022-06-24/13:33:51		Finish checking outliers for the following columns: ['NSU', 'NSV', 'GST Value', 'NSV-GST', 'Gross Sales', 'MRP', 'SP', 'DIS', 'DIS%']
+2022-06-24/13:33:51		Start removing outliers for the following columns: ['GST Value', 'SP', 'MRP']
+2022-06-24/13:33:51		Finish capping outliers for the following columns: ['GST Value', 'SP', 'MRP']
+2022-06-24/13:33:54		End of data preprocessing
