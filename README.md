@@ -73,7 +73,7 @@ The following sections below explains the three main approaches that can be used
 
 For replicating the steps required for running this project on your own Heroku account, the following steps are required:
 1. Clone this github repository into your local machine system or your own Github account if available.
-<img src="https://user-images.githubusercontent.com/34255556/160223555-388eb56f-7ca5-4d40-88ca-ad80b1638599.png" width="600" height="200">
+<img src="https://user-images.githubusercontent.com/34255556/176189931-0fb31aab-d5ab-4326-bd62-7c5327f709fa.png" width="600" height="300">
 
 2. Delete files stored inside Training_Logs and Prediction_Logs folder, while creating a dummy.txt file inside both folders respectively. This is to ensure both directories exist when the model is deployed into Heroku.
 <img src="https://user-images.githubusercontent.com/34255556/160224012-4f861309-1e7a-40ad-b466-dbdc8e22f20e.png" width="600" height="80">
@@ -125,6 +125,7 @@ For replicating the steps required for running this project on your own Heroku a
 If you prefer to deploy this project on your local machine system, the steps for deploying this project has been simplified down to the following:
 
 1. Download and extract the zip file from this github repository into your local machine system.
+<img src="https://user-images.githubusercontent.com/34255556/176189931-0fb31aab-d5ab-4326-bd62-7c5327f709fa.png" width="600" height="300">
 
 2. Empty the files stored inside Training_Logs and Prediction_Logs folder.
 
@@ -181,6 +182,7 @@ A suitable alternative for deploying this project is to use Docker, which allows
 Docker Desktop needs to be installed into your local system, before proceeding with the following steps:
 
 1. Download and extract the zip file from this github repository into your local machine system.
+<img src="https://user-images.githubusercontent.com/34255556/176189931-0fb31aab-d5ab-4326-bd62-7c5327f709fa.png" width="600" height="300">
 
 2. Empty the files stored inside Training_Logs and Prediction_Logs folder.  
   
