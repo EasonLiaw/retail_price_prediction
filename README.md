@@ -15,9 +15,9 @@ In addition, schema of datasets for training and prediction is provided in .json
 
 **Code and Resources Used**
 ---
-- **Python Version** : 3.9.10
-- **Packages** : feature-engine, imbalanced-learn, kneed, matplotlib, mysql-connector-python, numpy, optuna, pandas, scikit-learn, scipy, seaborn, streamlit, tensorflow, keras
-- **Dataset source** : Education materials from OneNeuron platform
+- **Python Version** : 3.9.7
+- **Packages** : feature-engine, kneed, matplotlib, psycopg2, numpy, optuna, pandas, scikit-learn, scipy, seaborn, streamlit, tensorflow, keras, category_encoders
+- **Dataset source** : Dummy data from 360DIGITMG
 - **Streamlit documentation** : https://spotipy.readthedocs.io/en/2.16.0/
 - **Optuna documentation** : https://spotipy.readthedocs.io/en/2.16.0/
 - **Tensorflow documentation**: https://www.tensorflow.org/api_docs
@@ -43,38 +43,26 @@ Note that all steps mentioned above have been logged accordingly for future refe
 ---
 The following points below summarizes the use of every file/folder available for this project:
 1. Application_Logger: Helper module for logging model training and prediction process
-2. Archive_Prediction_Data: Stores bad quality prediction csv files that have been used previously for model prediction
-3. Archive_Training_Data: Stores bad quality training csv files that have been used previously for model training
-4. Bad_Prediction_Data: Temporary folder for identifying bad quality prediction csv files
-5. Bad_Training_Data: Temporary folder for identifying bad quality prediction csv files
-6. Good_Prediction_Data: Temporary folder for identifying good quality prediction csv files
-7. Good_Training_Data: Temporary folder for identifying good quality training csv files
-8. Intermediate_Pred_Results: Stores results from model prediction
-9. Intermediate_Train_Results: Stores additional information from model training process
-10. Model_Prediction_Modules: Helper modules for model prediction
-11. Model_Training_Modules: Helper modules for model training
-12. Prediction_Batch_Files: Stores csv batch files to be used for model prediction
-13. Prediction_Data_FromDB: Stores compiled data from SQL database for model prediction
-14. Prediction_Logs: Stores logging information from model prediction for future debugging and maintenance
-15. Saved_Models: Stores best models identified from model training process for model prediction
-16. Training_Batch_Files: Stores csv batch files to be used for model training
-17. Training_Data_FromDB: Stores compiled data from SQL database for model training
-18. Training_Logs: Stores logging information from model training for future debugging and maintenance
-19. Dockerfile: Additional file for Docker model deployment
-20. main.py: Main file for program execution
-21. Procfile: Additional file for Heroku model deployment
-22. README.md: Details summary of project for presentation
-23. requirements.txt: List of Python packages to install for model deployment
-24. schema_prediction.json: JSON file that contains database schema for model prediction
-25. schema_training.json: JSON file that contains database schema for model training
-26. setup.sh : Additional file for Heroku model deployment
+2. Good_Train_Data: Stores csv file after initial data preprocessing for data ingestion into PostgreSQL database
+3. Intermediate_Train_Results: Stores additional information from model training process
+4. Model_Training_Modules: Helper modules for model training
+5. Saved_Models: Stores best models identified from model training process for model prediction
+6. Training_Batch_Files: Stores csv files to be used for model training
+7. Training_Data_FromDB: Stores compiled data from PostgreSQL database for model training
+8. Training_Logs: Stores logging information from model training for future debugging and maintenance
+9. Dockerfile: Additional file for Docker model deployment
+10. main.py: Main file for program execution
+11. README.md: Details summary of project for presentation
+12. requirements.txt: List of Python packages to install for model deployment
+13. schema_prediction.json: JSON file that contains database schema for model prediction
+14. schema_training.json: JSON file that contains database schema for model training
 
 The following sections below explains the three main approaches that can be used for model deployment in this project:
-1. <b>Cloud Platform (Heroku)</b>
+1. <b>Google Cloud Platform (GCP)</b>
 2. <b>Local system</b>
 3. <b>Docker</b>
 
-**Project Instructions (Heroku)**
+**Project Instructions (GCP)**
 ---
 <b> For deploying models onto Heroku platform, the following additional files are essential</b>:
 - Procfile
@@ -113,25 +101,36 @@ For replicating the steps required for running this project on your own Heroku a
 <img src="https://user-images.githubusercontent.com/34255556/160223941-2aacc3ca-4ab5-4996-be46-f2d553933dd5.png" width="600" height="300">
 
 8. After successful model deployment, open the app and you will see the following interface designed using Streamlit:
-<img src="https://user-images.githubusercontent.com/34255556/174513887-d2614ff2-a1d4-4ed5-886a-4ea44045bcc1.png" width="600" height="300">
 
-9. From the image above, click on Data Preparation first for initializing data ingestion into MySQL, followed by Preprocessing & Model_Training for training models, followed by Data Prediction for model prediction. (Note that zip files will be available for download after successfully completing either model training or model prediction, which contains the results from running the process)
-<img src="https://user-images.githubusercontent.com/34255556/174514771-8510f66c-784c-4c32-9565-d5f42ce6373d.png" width="600" height="350">
-<img src="https://user-images.githubusercontent.com/34255556/174514833-1fc904b3-faae-408d-9f06-c31293413d3b.png" width="600" height="350">
-  
-<b>Important Note: Using "free" dynos on Heroku app only allows the app to run for a maximum of 30 minutes. Since the model training and prediction process takes a long time, consider changing the dynos type to "hobby" for unlimited time, which cost about $7 per month per dyno. You may also consider changing the dynos type to Standard 1X/2X for enhanced app performance.</b>
+![image](https://user-images.githubusercontent.com/34255556/176185292-cf3cb500-1055-4c49-95fb-71c4df1249db.png)
+
+9. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
+
+![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
+![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
+
+10. For model prediction, users can input the following information onto the interface for retail price prediction:
+- Brand: List of brand values
+- MC: List of category of material values
+- NSU (Net Sales Unit): Floating value from 0
+- GST: Floating value from 0
+- MRP (Maximum Retail Price): Floating value from 0
+- SP (Selling Price): Floating value from 0
+- Zone: [NORTH, SOUTH, EAST, WEST]
+- Month: 1 to 12
+- Year: 2017 onwards
 
 **Project Instructions (Local Environment)**
 ---  
 If you prefer to deploy this project on your local machine system, the steps for deploying this project has been simplified down to the following:
 
 1. Download and extract the zip file from this github repository into your local machine system.
-<img src="https://user-images.githubusercontent.com/34255556/160223555-388eb56f-7ca5-4d40-88ca-ad80b1638599.png" width="600" height="200">
 
 2. Empty the files stored inside Training_Logs and Prediction_Logs folder.
 
-3. Open MySQL in your local machine system and create a new database name of your choice with the following syntax: <b>CREATE DATABASE db_name;</b>
-- Note that you will need to install MySQL if not available in your local system: https://dev.mysql.com/downloads/windows/installer/8.0.html
+3. Open pgAdmin 4 in your local machine system and create a new database name of your choice with the following syntax: <b>CREATE DATABASE db_name;</b>
+- Note that you will need to install PostgreSQL first if not available in your local system: https://www.postgresql.org/download/
+- After installing PostgreSQL, download pgAdmin4 for a better GUI when interacting with PostgreSQL database: https://www.pgadmin.org/download/
   
 4. Add an additional Python file named as DBConnectionSetup.py that contains the following Python code structure: 
 ```
@@ -142,7 +141,7 @@ logins = {"host": <host_name>,
 ```
 - For security reasons, this file needs to be stored in private.
   
-5. Open anaconda prompt and create a new environment with the following syntax: <b>conda create -n myenv python=3.9.10 anaconda</b>
+5. Open anaconda prompt and create a new environment with the following syntax: <b>conda create -n myenv python=3.9.7 anaconda</b>
 - Note that you will need to install anaconda if not available in your local system: https://www.anaconda.com/
 
 6. After creating a new anaconda environment, activate the environment using the following command: <b>conda activate myenv</b>
@@ -154,11 +153,24 @@ logins = {"host": <host_name>,
 If you encounter the TomlDecodeError, ensure that the <b>config.toml</b> file is removed from the directory where Streamlit is installed to prevent TomlDecodeError. The following link explains more details about the error that you might encounter: https://stackoverflow.com/questions/59811357/how-to-solve-toml-decoder-tomldecodeerror-key-group-not-on-a-line-by-itself-l
 
 9. A new browser will open after successfully running the streamlit app with the following interface:
-<img src="https://user-images.githubusercontent.com/34255556/174513887-d2614ff2-a1d4-4ed5-886a-4ea44045bcc1.png" width="600" height="300">
 
-10. From the image above, click on Data Preparation first for initializing data ingestion into MySQL, followed by Preprocessing & Model_Training for training models, followed by Data Prediction for model prediction. (Note that zip files will be available for download after successfully completing either model training or model prediction, which contains the results from running the process)
-<img src="https://user-images.githubusercontent.com/34255556/174514771-8510f66c-784c-4c32-9565-d5f42ce6373d.png" width="600" height="350">
-<img src="https://user-images.githubusercontent.com/34255556/174514833-1fc904b3-faae-408d-9f06-c31293413d3b.png" width="600" height="350">
+![image](https://user-images.githubusercontent.com/34255556/176185292-cf3cb500-1055-4c49-95fb-71c4df1249db.png)
+
+10. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
+
+![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
+![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
+
+10. For model prediction, users can input the following information onto the interface for retail price prediction:
+- Brand: List of brand values
+- MC: List of category of material values
+- NSU (Net Sales Unit): Floating value from 0
+- GST: Floating value from 0
+- MRP (Maximum Retail Price): Floating value from 0
+- SP (Selling Price): Floating value from 0
+- Zone: [NORTH, SOUTH, EAST, WEST]
+- Month: 1 to 12
+- Year: 2017 onwards
 
 **Project Instructions (Docker)**
 ---
@@ -169,7 +181,6 @@ A suitable alternative for deploying this project is to use Docker, which allows
 Docker Desktop needs to be installed into your local system, before proceeding with the following steps:
 
 1. Download and extract the zip file from this github repository into your local machine system.
-<img src="https://user-images.githubusercontent.com/34255556/160223555-388eb56f-7ca5-4d40-88ca-ad80b1638599.png" width="600" height="200">
 
 2. Empty the files stored inside Training_Logs and Prediction_Logs folder.  
   
@@ -192,64 +203,82 @@ logins = {"host": <host_name>,
 
 - Note that port 8501 is required to run streamlit on Docker.
 
-7. Open a new browser with the following link shown on the image above, which will open after successfully running the streamlit app with the following interface:
-<img src="https://user-images.githubusercontent.com/34255556/174513887-d2614ff2-a1d4-4ed5-886a-4ea44045bcc1.png" width="600" height="300">
+7. A new browser will open after successfully running the streamlit app with the following interface:
 
-8. From the image above, click on Data Preparation first for initializing data ingestion into MySQL, followed by Preprocessing & Model_Training for training models, followed by Data Prediction for model prediction. (Note that zip files will be available for download after successfully completing either model training or model prediction, which contains the results from running the process)
-<img src="https://user-images.githubusercontent.com/34255556/174514771-8510f66c-784c-4c32-9565-d5f42ce6373d.png" width="600" height="350">
-<img src="https://user-images.githubusercontent.com/34255556/174514833-1fc904b3-faae-408d-9f06-c31293413d3b.png" width="600" height="350">
+![image](https://user-images.githubusercontent.com/34255556/176185292-cf3cb500-1055-4c49-95fb-71c4df1249db.png)
+
+8. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
+
+![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
+![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
+
+9. For model prediction, users can input the following information onto the interface for retail price prediction:
+- Brand: List of brand values
+- MC: List of category of material values
+- NSU (Net Sales Unit): Floating value from 0
+- GST: Floating value from 0
+- MRP (Maximum Retail Price): Floating value from 0
+- SP (Selling Price): Floating value from 0
+- Zone: [NORTH, SOUTH, EAST, WEST]
+- Month: 1 to 12
+- Year: 2017 onwards
 
 **Project Findings**
 ---
 
-### 1. Overall confusion matrix
-
-The following image below summarizes the confusion matrix from the final model trained for predicting status of wafers:
-
-![image](https://user-images.githubusercontent.com/34255556/175194305-afb07f5c-6c66-433f-ad95-6869bc327998.png)
-
-From the image above, the classification model performs better for status of wafers in bad condition (1) with less false negatives (10 samples), as compared to false positives (173 samples). Given that the model evaluation criteria emphasize the costly impact of having false negatives, the current classification model is optimized to improve recall score, instead of precision score.
-
----
-### 2. Best classification model configuration
+### 1. Best regression model configuration
 
 The following information below summarizes the configuration of the best model identified in this project:
 
-  - <b>Best model class identified</b>: Support Vector Classifier
+  - <b>Best model class identified</b>: Extra Trees Regressor
 
-  - <b>Best model hyperparameters</b>: {'C': 0.02364010981012719, 'break_ties': False, 'cache_size': 200, 'class_weight': 'balanced', 'coef0': 0.0, 'decision_function_shape': 'ovr', 'degree': 3, 'gamma': 'scale', 'kernel': 'linear', 'max_iter': -1, 'probability': True, 'random_state': 42, 'shrinking': True, 'tol': 0.001, 'verbose': False}
+  - <b>Best model hyperparameters</b>: {'bootstrap': False, 'ccp_alpha': 6.3279240080591865, 'criterion': 'squared_error', 'max_depth': 10, 'max_features': 'sqrt', 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 100, 'n_jobs': -1, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}
 
-  - <b>Number of features selected</b>: 27
+  - <b>Number of features selected</b>: 4
 
-  - <b>List of features selected</b>: ['Sensor56', 'Sensor76', 'Sensor101', 'Sensor104', 'Sensor112', 'Sensor122', 'Sensor126', 'Sensor130', 'Sensor131', 'Sensor184', 'Sensor246', 'Sensor269', 'Sensor292', 'Sensor320', 'Sensor324', 'Sensor337', 'Sensor346', 'Sensor384', 'Sensor407', 'Sensor419', 'Sensor424', 'Sensor434', 'Sensor456', 'Sensor511', 'Sensor518', 'Sensor541', 'Sensor583', 1, 2, 3] (Note: 1,2 and 3 indicates cluster number)
+  - <b>List of features selected</b>: ['MC', 'MRP', 'SP', 'DIS']
   
-  - <b>Clustering</b>: Yes
+  - <b>Clustering</b>: No
 
 Note that the results above may differ for every instance of project implementation.
 
 ---
-### 3. Summary of model evaluation metrics from best classification model
+### 2. Summary of model evaluation metrics from best regression model
 
 The following information below summarizes the evaluation metrics from the best model identified in this project: 
 
-  - <b>Matthews Correlation Coefficient (Train-val set)</b>: 0.2576
-  - <b>Matthews Correlation Coefficient (Test set)</b>: 0.2541
+  - <b>RMSE (Train-val set)</b>: 44.7699
+  - <b>RMSE (Test set)</b>: 45.8646
   
-  - <b>Recall score (Train-val set)</b>: 0.7626
-  - <b>Recall score (Test set)</b>: 0.7609
+  - <b>MAE (Train-val set)</b>: 16.7682
+  - <b>MAE (Test set)</b>: 17.7559
 
 Note that the results above may differ for every instance of project implementation.
 
 ---
-### 4. Learning Curve Analysis
-  
-![image](https://user-images.githubusercontent.com/34255556/175194088-598f252a-ff27-41ba-9234-6bdbedefa0a3.png)
+### 3. Learning Curve Analysis
 
-From the diagram above, the gap between train and test recall scores (from 5-fold cross validation) gradually decreases as number of training sample size increases.
-Although the gap between both scores are approximately 13%, both scores have not yet stabilize over a number of training samples. This indicates that more data can still be collected to ensure less risk of overfitting.
+![Learning_Curve_Analysis](https://user-images.githubusercontent.com/34255556/176183310-c0d47587-6716-4f56-8f97-9c82a8c0fc21.png)
+
+From the diagram above, the gap between train and test RMSE scores (from 5-fold cross validation) gradually decreases as number of training sample size increases.
+The gap between both scores are approximately 9.95%, which doesn't provide indication of model overfitting or underfitting. In addition, both train and test RMSE scores have stabilize over larger number of samples (i.e. more than 30000), which indicates that collecting more samples may not further improve model performance.
 
 ---
-### 5. Summary from feature-engineering/data cleaning process
+### 4. Leverage Plot Analysis
+
+![Leverage_Plot](https://user-images.githubusercontent.com/34255556/176183900-04e252c8-a9a6-4668-9fe2-73ac4c742cbc.png)
+
+From the diagram above, there are many records that are identified as having high leverage or large residuals. Using Cook’s distance (value is more than 3 times the average of all values), this confirms that there are 279 records as being highly influential, which requires further investigation on the data for better understanding whether these data anomalies should be treated.
+
+---
+### 5. Feature Importance Analysis
+
+![Feature_Importance](https://user-images.githubusercontent.com/34255556/176184221-c95734ee-3676-41c2-a207-5a7b42ea3541.png)
+
+From the diagram above, it is very clear that variables like MRP and SP are the two most important features that determines the cost per unit of a given retail item, given both features have a very high feature importance score (>0.4). Meanwhile, other features like MC and DIS provide much lower importance score (<0.05).
+
+---
+### 6. Summary from feature-engineering/data cleaning process
 Note that all intermediate results from this stage are stored in Intermediate_Train_Results folder for reference.
 
 Prior to model training, the following steps have been taken for feature engineering/data cleaning with the following outcomes:
@@ -299,7 +328,7 @@ Note that anderson test is used to identify whether a given gaussian transformat
 For more detailed breakdown of gaussian transformation method used for various features, refer to the following CSV file: Best_Transformation_Non_Gaussian.csv
 
 #### vi. Feature scaling methods used
-Feature scaling is only essential in some Machine Learning models like Logistic Regression, SVC, KNN and Neural networks for faster convergence and to prevent misinterpretation of one feature significantly more important than other features.
+Feature scaling is only essential in some Machine Learning models like Huber Regression, Lasso and Neural networks for faster convergence and to prevent misinterpretation of one feature significantly more important than other features.
   
 **Legality**
 ---
