@@ -1,9 +1,9 @@
-# Wafer Status Classification Project
+# Retail Price Prediction Project
 
 **Background**
 ---
 
-<img src="https://www.semiconductorforu.com/wp-content/uploads/2021/02/silicon-wafer.jpg">
+<img src="https://datacrops.com/wp-content/uploads/2017/08/How-Retail-Pricing-Intelligence-can-assist-with-Price-Optimization-792350.jpg">
 
 In electronics, a wafer (also called a slice or substrate) is a thin slice of semiconductor used for the fabrication of integrated circuits. Monitoring working conditions of these wafers present its challenges of having additional resources required for manual monitoring with insights and decisions that need to be made quickly for replacing wafers that are not in good working conndition when required. Using IIOT (Industrial Internet of Things) helps to overcome this challenge through a collection of real-time data from multiple sensors. 
 
