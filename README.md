@@ -184,9 +184,13 @@ Docker Desktop needs to be installed into your local system, before proceeding w
 1. Download and extract the zip file from this github repository into your local machine system.
 <img src="https://user-images.githubusercontent.com/34255556/176189931-0fb31aab-d5ab-4326-bd62-7c5327f709fa.png" width="600" height="300">
 
-2. Empty the files stored inside Training_Logs and Prediction_Logs folder.  
+2. Empty the files stored inside Training_Logs and Prediction_Logs folder.
+
+3. Open pgAdmin 4 in your local machine system and create a new database name of your choice with the following syntax: <b>CREATE DATABASE db_name;</b>
+- Note that you will need to install PostgreSQL first if not available in your local system: https://www.postgresql.org/download/
+- After installing PostgreSQL, download pgAdmin4 for a better GUI when interacting with PostgreSQL database: https://www.pgadmin.org/download/
   
-3. Add an additional Python file named as DBConnectionSetup.py that contains the following Python code structure: 
+4. Add an additional Python file named as DBConnectionSetup.py that contains the following Python code structure: 
 ```
 logins = {"host": <host_name>, 
           "user": <user_name>, 
@@ -195,26 +199,26 @@ logins = {"host": <host_name>,
 ```
 - For security reasons, this file needs to be stored in private.
   
-4. Create a file named Dockerfile with the following commands:
+5. Create a file named Dockerfile with the following commands:
 <img src="https://user-images.githubusercontent.com/34255556/160229685-c268b253-02f2-42f3-912a-189930a997f4.png">
 
-5. Build a new docker image on the project directory with the following command: <b>docker build -t api-name .</b>
+6. Build a new docker image on the project directory with the following command: <b>docker build -t api-name .</b>
 
-6. Run the docker image on the project directory with the following command: <b>docker run -p 8501:8501 api-name</b>
+7. Run the docker image on the project directory with the following command: <b>docker run -p 8501:8501 api-name</b>
 <img src="https://user-images.githubusercontent.com/34255556/160229611-1e20ef06-dba2-4b0c-8735-2ac44fc1d38f.png" width="600" height="100">
 
 - Note that port 8501 is required to run streamlit on Docker.
 
-7. A new browser will open after successfully running the streamlit app with the following interface:
+8. A new browser will open after successfully running the streamlit app with the following interface:
 
 ![image](https://user-images.githubusercontent.com/34255556/176185292-cf3cb500-1055-4c49-95fb-71c4df1249db.png)
 
-8. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
+9. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
 
 ![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
 ![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
 
-9. For model prediction, users can input the following information onto the interface for retail price prediction:
+10. For model prediction, users can input the following information onto the interface for retail price prediction:
 - Brand: List of brand values
 - MC: List of category of material values
 - NSU (Net Sales Unit): Floating value from 0
@@ -285,49 +289,42 @@ Note that all intermediate results from this stage are stored in Intermediate_Tr
 
 Prior to model training, the following steps have been taken for feature engineering/data cleaning with the following outcomes:
 
-#### i. Removal of irrelevant features
-From a total of 591 features, 131 features have been removed with the following breakdown along with its justification:
+#### i. Data Anomalies
+
+#### ii. Removal of irrelevant features
+From a total of 19 features, 6 features have been removed with the following breakdown along with its justification:
 
 | Justification                | No. of features|
 | :---------------------------:|:--------------:|
 | Label ID                     | 1              |
-| More than 80% missing values | 4              |
-| Constant variance            | 126            |
+| Irrelevant columns           | 5              |
 
 For more details of which features have been removed from the dataset, refer to the following CSV file: <b>Columns_Drop_from_Original.csv</b>
 
-#### ii. Gaussian vs Non-gaussian Variables
-From the remaining 460 features, 90 features are identified to follow gaussian distribution and remaining 370 features are identified to follow non-gaussian distribution. All features are identified to follow either gaussian or non-gaussian distribution using Anderson test from Statsmodels package.
+#### iii. Gaussian vs Non-gaussian Variables
+From the remaining 9 continuous features, all continuous features are identified to follow non-gaussian distribution. All features are identified to follow either gaussian or non-gaussian distribution using Anderson test from Statsmodels package.
 
 For more details of which features are gaussian or non-gaussian, refer to the following CSV files: <b>Gaussian_columns.csv, Non_gaussian_columns.csv</b>
 
-#### iii. Proportion of Missing Values
-Out of 460 features, 435 features are identified to have missing values with different proportions. All 435 features are identified to have strong to very strong correlation of missingness with other features (data missing not completely at random), thus using simple imputation methods like mean or median imputation is less suitable. Instead, <b>iterative imputation is applied across all features with missing values</b>.
-
-For more details of proportion of missing values for all features, refer to the following CSV file: <b>Missing_Values_Info.csv</b>
-
-Additional CSV files like <b>Imputation_Methods.csv</b> and <b>Missing_Values_Records.csv</b> have also been included for reference.
-
 #### iv. Summary of Outliers Identified
-Out of 460 features, 440 features are identified to have outliers (13 gaussian features and 427 non gaussian features) with different proportion of outliers ranging from 0.15% to 27.06%. Although these outliers have been identified using statistical methods like mean and standard deviation for gaussian variables and median and interquartile range (IQR) for non-gaussian variables, removing such outliers will require further investigation and proper justification from a business perspective.
+All 9 continuous features are identified to have outliers with different proportion of outliers ranging from 11.8% to 14.1%. Although these outliers have been identified using statistical methods like median and interquartile range (IQR) for non-gaussian variables, removing such outliers will require further investigation and proper justification from a business perspective.
 
-Thus, an alternative method to handle these outliers is to capping outliers at boundary values using mean and st. deviation for gaussian variables and IQR for non-gaussian variables. Additional experiments can also be done to identify impact of outlier handling methods on model performance.
+Thus, an alternative method to handle these outliers is to capping outliers at boundary values using IQR for non-gaussian variables. However, simply capping outliers at boundary values for all non-gaussian features is not possible for this dataset, since there are other features that internally depends on other features. Upon closer inspection, these following features can be used for capping outliers without resulting in too many features having large proportion of outliers:  ['GST Value','SP','MRP']
 
-For more details of proportion of outliers for all features, refer to the following CSV files: <b>Outliers_Info_Gaussian.csv, Outliers_Info_Non_Gaussian.csv</b>
+After capping outliers of those features, remainning features will require recalculation to ensure formula consistency between all features.
 
-#### v. Gaussian transformation on non-gaussian variables
-In Machine Learning, several machine learning models like logistic regression and gaussian naive bayes tends to perform best when data follows the assumption of normal distribution. Out of 370 non-gaussian features, 65 features can be transformed into gaussian distribution with the following breakdown:
+For more details of proportion of outliers for all features, refer to the following CSV file: <b>Outliers_Info_Non_Gaussian.csv</b>
 
-| Gaussian transformation| No. of features|
-| :---------------------:|:--------------:|
-| Yeo-johnson            | 22             |
-| Reciprocal             | 1              |
-| Square root            | 24             |
-| Logarithmic            | 18             |
+#### v. Categorical data encoding
+This dataset has the following categorical features that requires data encoding using the following methods:
 
-Note that anderson test is used to identify whether a given gaussian transformation technique successfully converts a non-gaussian feature to a gaussian feature.
+| Feature Name| Encoding Method   | Justification of method                   |
+| :----------:|:-----------------:|:-----------------------------------------:|
+| Brand       | Count Encoding    | High cardinality with no duplicated counts|
+| MC          | CatBoost Encoding | High cardinality with duplicated counts   |
+| ZONE        | One Hot Encoding  | Low cardinality                           |
 
-For more detailed breakdown of gaussian transformation method used for various features, refer to the following CSV file: Best_Transformation_Non_Gaussian.csv
+In addition, Fdate variable has been split into Month and Year column.
 
 #### vi. Feature scaling methods used
 Feature scaling is only essential in some Machine Learning models like Huber Regression, Lasso and Neural networks for faster convergence and to prevent misinterpretation of one feature significantly more important than other features.
