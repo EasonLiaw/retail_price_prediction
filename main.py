@@ -57,11 +57,11 @@ def main():
 
     # User input form for price prediction
     with st.expander("Model Prediction"):
-        brand = st.selectbox('Select Brand',['GOLDEN HARVEST PREMIUM','KARMIQ',"SANGI'S KITCHEN",'EKTAA','GOLDEN HARVEST PRIME',
+        brand = st.selectbox('Select Brand of Product',['GOLDEN HARVEST PREMIUM','KARMIQ',"SANGI'S KITCHEN",'EKTAA','GOLDEN HARVEST PRIME',
         'GOLDEN HARVEST','COP LOOSE','DESI ATTA','MOTHER EARTH','COP UNBRANDED','NATURES CHOICE','FRESH & PURE','KOSH',
         'PREMIUM HARVEST','NILGIRIS','BUSTAAN','AGRI PURE','SHUBHRA','FARMERS PRIDE','SUNKIST','GOLDEN HARVEST DAILY','FB SIS'])
 
-        mc = st.selectbox('Select MC',['Urad Dal', 'Raisin', 'Chilli/Mirch Powder', 'Sabudana', 'Poha/Avalakki/Chirwa', 'Toor Dal', 'Non Veg - Curry Masa',
+        mc = st.selectbox('Select Material Category of Product',['Urad Dal', 'Raisin', 'Chilli/Mirch Powder', 'Sabudana', 'Poha/Avalakki/Chirwa', 'Toor Dal', 'Non Veg - Curry Masa',
         'Chilli/Mirch Whole', 'Kabuli Chana Whole', 'Lokwan Wheat', 'Other Whole Spices', 'Mustard/Rai Whole', 'Watana Whole','North Indian Mixes', 'Fenugreek/Methi Whol', 
         'Millets', 'Double Boiled Rice', 'Rice Based Flour', 'Cumin/Jeera Whole','South Indian Mixes', 'Health & Other Flour', 'Salt', 'Other Whole Pulses', 
         'Multigrain Flour', 'Jaggery', 'Red Chana Whole','Masoor Dal', 'Fennel/Saunf Whole', 'Health Rice', 'Moong Chilka', 'Turmeric/Haldi Powde', 'Cashew', 
@@ -76,20 +76,20 @@ def main():
         'RICE RECIPE READY', 'Pepper/Kali Mirch Wh', 'Walnut','Other Split Pulses', 'Groundnut', 'Clove/Laung Whole', 'DAL RECIPE READY', 'Til Oil', 'Steam Rice', 
         'Economy Rice', 'Soyabean Oil', 'Cumin/Jeera Powder', 'Cow Ghee', 'Health Oil', 'Other Flavoured Nuts', 'Supreme Rice', 'Other Powdered Spice', 'Ponny Raw Rice', 
         'Dried Coconut/Kopra', 'Garam Masala Whole', 'Value Added Sugar', 'Parmal Raw Rice', 'Groundnut Oil', 'Drinks & Beverage Ma', 'Cottonseed Oil', 'Vanaspati', 'Palm Oil'])
-        nsu = st.number_input('Enter NSU',min_value=0.00)
-        gst = st.number_input('Enter GST',min_value=0.00)
-        mrp = st.number_input('Enter MRP',min_value=0.01)
-        sp = st.number_input('Enter SP',min_value=0.00)
+        nsu = st.number_input('Enter Net Sales Unit',min_value=0.00)
+        gst = st.number_input('Enter GST Value',min_value=0.00)
+        mrp = st.number_input('Enter maximum possible retail price',min_value=0.01)
+        sp = st.number_input('Enter selling price',min_value=0.00)
         countencoder = pkl.load(open('Intermediate_Train_Results/CountEncoder.pkl','rb'))
         brand_value = countencoder.transform(pd.Series([brand],name='Brand'))
         catboostencoder = pkl.load(open('Intermediate_Train_Results/CatBoostEncoder.pkl','rb'))
         mc_value = catboostencoder.transform(pd.Series([mc],name='MC'))
-        zone = st.selectbox('Select Zone',('NORTH','SOUTH','EAST','WEST'))
+        zone = st.selectbox('Select zone of product',('NORTH','SOUTH','EAST','WEST'))
         zone_east_value = 1 if zone=='EAST' else 0
         zone_north_value = 1 if zone=='NORTH' else 0
         zone_south_value = 1 if zone=='SOUTH' else 0
-        month=st.selectbox('Select Month',(1,2,3,4,5,6,7,8,9,10,11,12))
-        year=st.selectbox('Select Year',(2017,2018,2019,2020,2021,2022))
+        month=st.selectbox('Select month of transaction',(1,2,3,4,5,6,7,8,9,10,11,12))
+        year=st.selectbox('Select year of transaction',(2017,2018,2019,2020,2021,2022))
         year_value = 1 if year == 2017 else 2 if year == 2018 else 3 if year == 2019 else 4 if year == 2020 else 5 if year == 2021 else 6 if year == 2022 else 0
         date = str(datetime.date(year,month,1))
         input_values = np.array([[brand_value.values[0][0], mc_value.values[0][0], nsu, nsu*sp,gst,nsu*sp-gst,nsu*mrp,mrp,sp,mrp-sp,(mrp-sp)/mrp*100,month,year_value,zone_east_value,zone_north_value,zone_south_value]])
