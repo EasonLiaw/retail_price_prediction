@@ -120,6 +120,9 @@ For replicating the steps required for running this project on your own Heroku a
 - Month: 1 to 12
 - Year: 2017 onwards
 
+Screenshot below shows an example of the web API with the output generated from model prediction:
+<img src="https://user-images.githubusercontent.com/34255556/176658808-50927709-f568-4cdf-b061-1450082c7ea0.png" width="650" height="500">
+
 **Project Instructions (Local Environment)**
 ---  
 If you prefer to deploy this project on your local machine system, the steps for deploying this project has been simplified down to the following:
@@ -172,6 +175,9 @@ If you encounter the TomlDecodeError, ensure that the <b>config.toml</b> file is
 - Zone: [NORTH, SOUTH, EAST, WEST]
 - Month: 1 to 12
 - Year: 2017 onwards
+
+Screenshot below shows an example of the web API with the output generated from model prediction:
+<img src="https://user-images.githubusercontent.com/34255556/176658808-50927709-f568-4cdf-b061-1450082c7ea0.png" width="650" height="500">
 
 **Project Instructions (Docker)**
 ---
@@ -229,6 +235,9 @@ logins = {"host": <host_name>,
 - Month: 1 to 12
 - Year: 2017 onwards
 
+Screenshot below shows an example of the web API with the output generated from model prediction:
+<img src="https://user-images.githubusercontent.com/34255556/176658808-50927709-f568-4cdf-b061-1450082c7ea0.png" width="650" height="500">
+
 **Project Findings**
 ---
 
@@ -264,7 +273,7 @@ Note that the results above may differ for every instance of project implementat
 ---
 ### 3. Learning Curve Analysis
 
-![Learning_Curve_Analysis](https://user-images.githubusercontent.com/34255556/176183310-c0d47587-6716-4f56-8f97-9c82a8c0fc21.png)
+<img src="https://user-images.githubusercontent.com/34255556/176183310-c0d47587-6716-4f56-8f97-9c82a8c0fc21.png" width="500" height="350">
 
 From the diagram above, the gap between train and test RMSE scores (from 5-fold cross validation) gradually decreases as number of training sample size increases.
 The gap between both scores are approximately 9.95%, which doesn't provide indication of model overfitting or underfitting. In addition, both train and test RMSE scores have stabilize over larger number of samples (i.e. more than 30000), which indicates that collecting more samples may not further improve model performance.
@@ -272,14 +281,14 @@ The gap between both scores are approximately 9.95%, which doesn't provide indic
 ---
 ### 4. Leverage Plot Analysis
 
-![Leverage_Plot](https://user-images.githubusercontent.com/34255556/176183900-04e252c8-a9a6-4668-9fe2-73ac4c742cbc.png)
+<img src="https://user-images.githubusercontent.com/34255556/176183900-04e252c8-a9a6-4668-9fe2-73ac4c742cbc.png" width="500" height="350">
 
 From the diagram above, there are many records that are identified as having high leverage or large residuals. Using Cook’s distance (value is more than 3 times the average of all values), this confirms that there are 279 records as being highly influential, which requires further investigation on the data for better understanding whether these data anomalies should be treated.
 
 ---
 ### 5. Feature Importance Analysis
 
-![Feature_Importance](https://user-images.githubusercontent.com/34255556/176184221-c95734ee-3676-41c2-a207-5a7b42ea3541.png)
+<img src="https://user-images.githubusercontent.com/34255556/176184221-c95734ee-3676-41c2-a207-5a7b42ea3541.png" width="500" height="350">
 
 From the diagram above, it is very clear that variables like MRP and SP are the two most important features that determines the cost per unit of a given retail item, given both features have a very high feature importance score (>0.4). Meanwhile, other features like MC and DIS provide much lower importance score (<0.05).
 
