@@ -5,13 +5,13 @@
 
 <img src="https://datacrops.com/wp-content/uploads/2017/08/How-Retail-Pricing-Intelligence-can-assist-with-Price-Optimization-792350.jpg">
 
-In electronics, a wafer (also called a slice or substrate) is a thin slice of semiconductor used for the fabrication of integrated circuits. Monitoring working conditions of these wafers present its challenges of having additional resources required for manual monitoring with insights and decisions that need to be made quickly for replacing wafers that are not in good working conndition when required. Using IIOT (Industrial Internet of Things) helps to overcome this challenge through a collection of real-time data from multiple sensors. 
+One of the current challenges faced by most retailers is to optimize prices with a balancing act between maximizing profits and maximizing sales. While traditional rule-based methods have been used by retailers to manage price optimization, these methods require manual analysis of customer and market data to ensure prices are aligned with current market conditions. Inevitably, the overall expansion of digitization of retail industry in recent years due to the global pandemic has resulted in a massive increase of sales-related data, such that traditional rule-based methods result in difficulty of continuous monitoring. 
 
-Thus, the main goal of this project is to design a machine learning model that predicts whether a wafer is in a good working condition or not based on inputs from 590 different sensors for every wafer. The quality of wafer sensors can be classified into two different categories: 0 for "good wafer" and 1 for "bad wafer".
+For this project, the main goal is to deploy initial regression models that help to predict optimum retail price for various products, while also improve brand and sales of various retail products in the long term. With the help of Machine Learning, retailers will be able to utilize the full potential of their data by effectively setting prices that maximizes their profits without discouraging customers from purchasing their products.
 
-Dataset is provided in .csv format by client under <b>Training_Batch_Files</b> folder for model training, while dataset under <b>Prediction_Batch_Files</b> folder will be used for predicting quality of wafer sensors.
+Dataset is provided in .csv format by client under <b>Training_Batch_Files</b> folder for model training. In addition, schema of datasets for training and prediction is provided in .json format by the client for storing seperate csv files into a single PostgreSQL database.
 
-In addition, schema of datasets for training and prediction is provided in .json format by the client for storing seperate csv files into a single MySQL database.
+For model prediction, a web API is used (created using StreamLit) for user input and the results generated from model prediction along with user inputs are stored directly into a table in PostgreSQL database.
 
 **Code and Resources Used**
 ---
@@ -37,7 +37,7 @@ The following diagram below summarizes the structure for this project:
 
 ![image](https://user-images.githubusercontent.com/34255556/164873790-34d8826f-2acc-43c9-9d7c-6aafd2e2b355.png)
 
-Note that all steps mentioned above have been logged accordingly for future reference and easy maintenance, which are stored in <b>Training_Logs</b> and <b>Prediction_Logs</b> folders. Any bad quality data identified for model training and model prediction will be archived accordingly in <b>Archive_Training_Data</b> and <b>Archive_Prediction_Data</b> folders.
+Note that all steps mentioned above have been logged accordingly for future reference and easy maintenance, which are stored in <b>Training_Logs</b> and <b>Prediction_Logs</b> folders.
 
 **Project Folder Structure**
 ---
@@ -162,7 +162,7 @@ If you encounter the TomlDecodeError, ensure that the <b>config.toml</b> file is
 ![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
 ![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
 
-10. For model prediction, users can input the following information onto the interface for retail price prediction:
+11. For model prediction, users can input the following information onto the interface for retail price prediction:
 - Brand: List of brand values
 - MC: List of category of material values
 - NSU (Net Sales Unit): Floating value from 0
@@ -197,7 +197,7 @@ logins = {"host": <host_name>,
           "password": <password>, 
           "dbname": <default_database_name>} 
 ```
-- For security reasons, this file needs to be stored in private.
+- For security reasons, this file needs to be stored in private. <b>Note that setting host name to "localhost" will result in connection error when connecting Docker to external PostgreSQL database. Instead, local ip adddress needs to be specified as the host name.</b>
   
 5. Create a file named Dockerfile with the following commands:
 <img src="https://user-images.githubusercontent.com/34255556/160229685-c268b253-02f2-42f3-912a-189930a997f4.png">
@@ -290,6 +290,12 @@ Note that all intermediate results from this stage are stored in Intermediate_Tr
 Prior to model training, the following steps have been taken for feature engineering/data cleaning with the following outcomes:
 
 #### i. Data Anomalies
+From the original dataset given, the following data anomalies have been identified that needs to be addressed:
+- <b>23 records of negative cost of goods sold (Sales at Cost variable)</b> identified. Such records are excluded from the model training process. Further investigation will be required to validate those records before including those as part of the analysis.
+
+- <b>Negative values for MRP, SP, NSU and GST Value features</b> have been identified. Constraints have been set for those variables to be strictly greater than zero. Other variables that depend on those features will need to be recalculated before model training.
+
+- <b>195 records identified to have selling price (SP) greater than maximum retail price (MRP)</b>. Such records are excluded from the model training process, since it is illegal for retailers in India to set retail prices beyond the maximum possible retail price (MRP).
 
 #### ii. Removal of irrelevant features
 From a total of 19 features, 6 features have been removed with the following breakdown along with its justification:
@@ -309,7 +315,7 @@ For more details of which features are gaussian or non-gaussian, refer to the fo
 #### iv. Summary of Outliers Identified
 All 9 continuous features are identified to have outliers with different proportion of outliers ranging from 11.8% to 14.1%. Although these outliers have been identified using statistical methods like median and interquartile range (IQR) for non-gaussian variables, removing such outliers will require further investigation and proper justification from a business perspective.
 
-Thus, an alternative method to handle these outliers is to capping outliers at boundary values using IQR for non-gaussian variables. However, simply capping outliers at boundary values for all non-gaussian features is not possible for this dataset, since there are other features that internally depends on other features. Upon closer inspection, these following features can be used for capping outliers without resulting in too many features having large proportion of outliers:  ['GST Value','SP','MRP']
+Thus, an alternative method to handle these outliers is to capping outliers at boundary values using IQR for non-gaussian variables. However, simply capping outliers at boundary values for all non-gaussian features is not possible for this dataset, since there are other features that internally depends on other features. Upon closer inspection, these following features can be used for capping outliers without resulting in too many features having large proportion of outliers:  <b>['GST Value','SP','MRP']</b>
 
 After capping outliers of those features, remainning features will require recalculation to ensure formula consistency between all features.
 
@@ -327,7 +333,7 @@ This dataset has the following categorical features that requires data encoding 
 In addition, Fdate variable has been split into Month and Year column.
 
 #### vi. Feature scaling methods used
-Feature scaling is only essential in some Machine Learning models like Huber Regression, Lasso and Neural networks for faster convergence and to prevent misinterpretation of one feature significantly more important than other features.
+Feature scaling is only essential in some Machine Learning models like Huber Regression, Lasso and Neural networks for faster convergence and to prevent misinterpretation of one feature significantly more important than other features. In this project, Robust Scaler is used for feature scaling, since this method is more robust to outliers (outliers are only capped in this project).
   
 **Legality**
 ---
