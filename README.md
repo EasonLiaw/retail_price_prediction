@@ -58,70 +58,8 @@ The following points below summarizes the use of every file/folder available for
 14. schema_training.json: JSON file that contains database schema for model training
 
 The following sections below explains the three main approaches that can be used for model deployment in this project:
-1. <b>Google Cloud Platform (GCP)</b>
-2. <b>Local system</b>
-3. <b>Docker</b>
-
-**Project Instructions (GCP)**
----
-<b> For deploying models onto Heroku platform, the following additional files are essential</b>:
-- Procfile
-- requirements.txt
-- setup.sh
-
-<b>Note that deploying models onto other cloud platforms like GCP, AWS or Azure may have different additionnal files required.</b>
-
-For replicating the steps required for running this project on your own Heroku account, the following steps are required:
-1. Clone this github repository into your local machine system or your own Github account if available.
-<img src="https://user-images.githubusercontent.com/34255556/176189931-0fb31aab-d5ab-4326-bd62-7c5327f709fa.png" width="600" height="300">
-
-2. Delete files stored inside Training_Logs and Prediction_Logs folder, while creating a dummy.txt file inside both folders respectively. This is to ensure both directories exist when the model is deployed into Heroku.
-<img src="https://user-images.githubusercontent.com/34255556/160224012-4f861309-1e7a-40ad-b466-dbdc8e22f20e.png" width="600" height="80">
-
-3. Go to your own Heroku account and create a new app with your own customized name.
-<img src="https://user-images.githubusercontent.com/34255556/160223589-301262f6-6225-4962-a92f-fc7ca8a0eee9.png" width="600" height="400">
-
-4. Go to "Resources" tab and search for ClearDB MySQL in the add-ons search bar.
-<img src="https://user-images.githubusercontent.com/34255556/160224064-35295bf6-3170-447a-8eae-47c6721cf8f0.png" width="600" height="200">
-
-5. Select the ClearDB MySQL add-on and select the relevant pricing plan. (Note that I select Punch plan, which currently cost about $9.99 per month to increase storage capacity for this project.)
-
-6. Add an additional Python file named as DBConnectionSetup.py that contains the following Python code structure: 
-```
-  logins = {"host": <host_name>, 
-            "user": <user_name>, 
-            "password": <password>, 
-            "dbname": <default_Heroku_database_name>}
-```
-- For security reasons, this file needs to be stored in private. I've also included a video reference link below for clear instructions on setup ClearDB MySQL for Heroku.
-  
-[![Deploy MySQL Database into Heroku](https://i.ytimg.com/vi/Zcg71lxW-Yo/hqdefault.jpg)](https://www.youtube.com/watch?v=Zcg71lxW-Yo&ab_channel=CodeJava)
-
-7. Inside your new app, deploy the code into the app by either linking your github repository or manually deploy it using Heroku CLI (Instructions are available and self-explanatory when selecting Heroku CLI option).
-<img src="https://user-images.githubusercontent.com/34255556/160223941-2aacc3ca-4ab5-4996-be46-f2d553933dd5.png" width="600" height="300">
-
-8. After successful model deployment, open the app and you will see the following interface designed using Streamlit:
-
-![image](https://user-images.githubusercontent.com/34255556/176185292-cf3cb500-1055-4c49-95fb-71c4df1249db.png)
-
-9. From the image above, click on Model Training for initializing data ingestion into PostgreSQL, further data cleaning and training models, followed by Initialize Prediction Database for initialize a new table for model prediction in PostgreSQL database.
-
-![image](https://user-images.githubusercontent.com/34255556/176185669-4a418c16-4806-4f06-95c6-abf5643b5012.png)
-![image](https://user-images.githubusercontent.com/34255556/176185692-5b352acb-2e88-4b34-87f3-6f5cc5c08822.png)
-
-10. For model prediction, users can input the following information onto the interface for retail price prediction:
-- Brand: List of brand values
-- MC: List of category of material values
-- NSU (Net Sales Unit): Floating value from 0
-- GST: Floating value from 0
-- MRP (Maximum Retail Price): Floating value from 0
-- SP (Selling Price): Floating value from 0
-- Zone: [NORTH, SOUTH, EAST, WEST]
-- Month: 1 to 12
-- Year: 2017 onwards
-
-Screenshot below shows an example of the web API with the output generated from model prediction:
-<img src="https://user-images.githubusercontent.com/34255556/176658808-50927709-f568-4cdf-b061-1450082c7ea0.png" width="650" height="500">
+1. <b>Local system</b>
+2. <b>Docker</b>
 
 **Project Instructions (Local Environment)**
 ---  
