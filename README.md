@@ -16,8 +16,10 @@ For model prediction, a web API is used (created using StreamLit) for user input
 **Code and Resources Used**
 ---
 - **Python Version** : 3.9.7
-- **Packages** : feature-engine, kneed, matplotlib, psycopg2, numpy, optuna, pandas, scikit-learn, scipy, seaborn, streamlit, tensorflow, keras, category_encoders
+- **Packages** : category_encoders, feature-engine, kneed, matplotlib, psycopg2, numpy, optuna, pandas, scikit-learn, scipy, seaborn, streamlit, tensorflow, keras, xgboost
 - **Dataset source** : Dummy data from 360DIGITMG
+- **Database Type**: PostgreSQL
+- **PostgreSQL documentation** : https://www.postgresql.org/docs/
 - **Streamlit documentation** : https://spotipy.readthedocs.io/en/2.16.0/
 - **Optuna documentation** : https://spotipy.readthedocs.io/en/2.16.0/
 - **Tensorflow documentation**: https://www.tensorflow.org/api_docs
